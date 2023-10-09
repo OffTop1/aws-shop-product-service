@@ -1,0 +1,22 @@
+org: chopar
+app: aws-node-http-api-project
+service: product-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  getProductList:
+    handler: index.getProductList
+    events:
+      - httpApi:
+          path: /products
+          method: get
+  getProductById:
+    handler: index.getProductById
+    events:
+      - httpApi:
+          path: /products/{productId}
+          method: get

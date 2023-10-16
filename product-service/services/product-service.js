@@ -12,7 +12,7 @@ class ProductService {
       ExpressionAttributeValues: { ':id': id }
     }).promise();
 
-    return product;
+    return product.Items;
   }
 
   async queryAllProducts() {

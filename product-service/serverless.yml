@@ -6,6 +6,20 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+          - "arn:aws:dynamodb:us-east-1:653231333242:table/Products"
+          - "arn:aws:dynamodb:us-east-1:653231333242:table/Stock"
 
 functions:
   getProductList:
@@ -20,3 +34,9 @@ functions:
       - httpApi:
           path: /products/{productId}
           method: get
+  createProduct:
+    handler: index.createProduct
+    events:
+      - httpApi:
+          path: /products
+          method: post

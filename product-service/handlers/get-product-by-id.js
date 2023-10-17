@@ -5,7 +5,9 @@ const dynamo = new aws.DynamoDB.DocumentClient();
 const productService = new ProductService(dynamo, 'Products');
 
 export default async event => {
+
   console.log('GetProductById function', event);
+
   try {
     const { productId } = event.pathParameters;
     const product = await productService.queryProductById(productId);

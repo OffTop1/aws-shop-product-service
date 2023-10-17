@@ -8,6 +8,7 @@ const productService = new ProductService(dynamo, 'Products');
 const stockService = new StockService(dynamo, 'Stock');
 
 export default async event => {
+
   console.log('GetProductList function', event);
 
   try {

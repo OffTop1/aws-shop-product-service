@@ -8,6 +8,7 @@ const productService = new ProductService(dynamo, 'Products');
 
 
 export default async event => {
+
   console.log('CreateProduct function', event);
 
   const productInfo = event.body;

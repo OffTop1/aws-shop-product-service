@@ -26,6 +26,7 @@
     "jest": "^29.7.0"
   },
   "dependencies": {
+    "aws-sdk": "^2.1474.0",
     "serverless": "^3.35.2"
   }
 }

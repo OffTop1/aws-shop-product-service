@@ -12,7 +12,7 @@ async function importFileParser(event) {
     const key = record.s3.object.key;
     const payload = await importService.getObject(key);
     await importService.moveObject(key);
-    await parseCSV(payload, console.log);
+    await parseCSV(payload);
   }
 
   return {

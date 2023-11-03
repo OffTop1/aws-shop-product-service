@@ -26,7 +26,7 @@ async function importFileParser(event) {
   }
 }
 
-async function sendMessageToSQS(products) {
+function sendMessageToSQS(products) {
   const promises = products.map(
     product => sqsService.sendMessage(product)
   )

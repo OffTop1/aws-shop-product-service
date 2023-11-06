@@ -20,6 +20,40 @@ provider:
           Resource:
           - "arn:aws:dynamodb:us-east-1:653231333242:table/Products"
           - "arn:aws:dynamodb:us-east-1:653231333242:table/Stock"
+        - Effect: Allow
+          Action:
+            - sqs:*
+          Resource:
+            - Fn::GetAtt: [SQSQueue, Arn]
+        - Effect: Allow
+          Action:
+            - sns:*
+          Resource:
+            Ref: SNSTopic
+  environment:
+    SQS_URL:
+      Ref: SQSQueue
+    SNS_ARN:
+      Ref: SNSTopic
+
+resources:
+  Resources:
+    SQSQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: catalogItemsQueue
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: createProductTopic
+    SNSSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: choparzs@gmail.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+
 
 functions:
   getProductList:
@@ -40,3 +74,12 @@ functions:
       - httpApi:
           path: /products
           method: post
+  catalogBatchProcess:
+    handler: index.catalogBatchProcess
+    events:
+      - sqs:
+          batchSize: 5
+          arn:
+            Fn::GetAtt:
+              - SQSQueue
+              - Arn

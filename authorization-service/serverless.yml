@@ -1,0 +1,13 @@
+org: chopar
+app: aws-node-http-api-project
+service: authorization-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  httpApi:
+    cors: true
+functions:
+  api:
+    handler: index.basicAuthorizer

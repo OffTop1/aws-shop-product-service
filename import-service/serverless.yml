@@ -6,6 +6,14 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  httpApi:
+    cors: true
+    allowCredentials: true
+    authorizers:
+      basicAuthorizer:
+        type: request
+        functionArn: arn:aws:lambda:us-east-1:653231333242:function:authorization-service-dev-api
+        identitySource: $request.header.Authorization
   iam:
     role:
       statements:
@@ -30,9 +38,11 @@ functions:
   importProductsFile:
     handler: index.importProductsFile
     events:
-      - http:
+      - httpApi:
           path: /import
           method: get
+          authorizer:
+            name: basicAuthorizer
   importFileParser:
     handler: index.importFileParser
     events:
